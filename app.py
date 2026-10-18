@@ -10,7 +10,10 @@ from starlette.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 EMAIL = os.getenv("EMAIL", "22f2000417@ds.study.iitm.ac.in")
-ALLOWED_ORIGIN = "https://app-7d793k.example.com"
+ALLOWED_ORIGINS = [
+    "https://app-7d793k.example.com",
+    "https://exam.sanand.workers.dev",
+]
 
 RATE_LIMIT = 13
 WINDOW_SECONDS = 10
@@ -50,7 +53,7 @@ async def rate_limiter(request: Request, call_next):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[ALLOWED_ORIGIN],
+    allow_origins=ALLOWED_ORIGIN,
     allow_credentials=False,
     allow_methods=["GET", "OPTIONS"],
     allow_headers=["X-Request-ID", "X-Client-Id", "Content-Type"],
